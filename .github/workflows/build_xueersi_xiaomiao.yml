@@ -221,7 +221,7 @@ jobs:
       #  run: |
       #    mv ./esp32_marauder/build/esp32.esp32.${{ matrix.board.build_dir }}/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.${{ matrix.board.build_dir }}/esp32_marauder.${{ matrix.board.file_name }}.bin
       
-      - name: Rename and Upload ${{ matrix.board.name }} Artifact
+      - name: Merge and Upload ${{ matrix.board.name }} Artifact
         run: |
           VERSION=$(grep '#define MARAUDER_VERSION' ./esp32_marauder/configs.h | sed -E 's/.*"v([^"]+)"/v\1/' | tr '.' '_' | tr -d '\r')
           DATE=$(date +%Y%m%d)
@@ -229,17 +229,63 @@ jobs:
           BUILD_DIR=./esp32_marauder/build/esp32.esp32.${{ matrix.board.build_dir }}
           INPUT_BIN=$BUILD_DIR/esp32_marauder.ino.bin
           OUTPUT_BIN=esp32_marauder_${VERSION}_${DATE}_${{ matrix.board.file_name }}.bin
-          VERSION_DOT=${VERSION_DOT}
 
-          mv "$INPUT_BIN" "$BUILD_DIR/$OUTPUT_BIN"
+          echo "===== BUILD_DIR contents ====="
+          ls -la "$BUILD_DIR"
+
+          # 优先使用 arduino-esp32 3.x 自动生成的完整合并镜像（可直接烧到 0x0）
+          AUTO_MERGED=$(find "$BUILD_DIR" -name '*.ino.merged.bin' | head -1)
+          if [ -n "$AUTO_MERGED" ]; then
+            echo "using arduino auto merged: $AUTO_MERGED"
+            cp "$AUTO_MERGED" "$OUTPUT_BIN"
+          else
+            # 手动合并：注意 arduino 3.x 文件名带 .ino. 前缀
+            BOOT=$(find "$BUILD_DIR" -name '*.bootloader.bin' | head -1)
+            [ -z "$BOOT" ] && BOOT=$(find "$BUILD_DIR" -name 'bootloader.bin' | head -1)
+            PART=$(find "$BUILD_DIR" -name '*.partitions.bin' | head -1)
+            [ -z "$PART" ] && PART=$(find "$BUILD_DIR" -name 'partitions.bin' | head -1)
+            echo "bootloader: $BOOT"
+            echo "partition : $PART"
+            echo "app       : $INPUT_BIN"
+            [ -z "$BOOT" ] && { echo "ERROR: bootloader not found"; exit 1; }
+            [ -z "$PART" ] && { echo "ERROR: partition not found"; exit 1; }
+            [ -f "$INPUT_BIN" ] || { echo "ERROR: app not found"; exit 1; }
+            python -m esptool merge_bin -o "$OUTPUT_BIN" \
+              --flash_mode dio --flash_freq 40m --flash_size 4MB \
+              0x1000 "$BOOT" 0x8000 "$PART" 0x10000 "$INPUT_BIN"
+          fi
+
+          echo "===== merged bin header check ====="
+          python - "$OUTPUT_BIN" <<'PY'
+          import sys
+          d=open(sys.argv[1],"rb").read()
+          print("size:",hex(len(d)))
+          print("flash0x0  magic E9?", d[0]==0xE9)
+          print("flash0x1000 magic E9?", d[0x1000]==0xE9)
+          print("flash0x8000 AA50?", d[0x8000:0x8002]==b'\xaa\x50')
+          print("flash0x10000 magic E9?", d[0x10000]==0xE9)
+          PY
+
+          # 备份三块分离文件，便于按 0x1000/0x8000/0x10000 单独烧录
+          mkdir -p parts
+          cp "$INPUT_BIN" parts/app.bin
+          BP=$(find "$BUILD_DIR" -name '*.bootloader.bin' | head -1); [ -n "$BP" ] && cp "$BP" parts/bootloader.bin
+          PP=$(find "$BUILD_DIR" -name '*.partitions.bin' | head -1); [ -n "$PP" ] && cp "$PP" parts/partitions.bin
+          (cd parts && zip -r ../xiaomiao_parts.zip .)
 
           echo "artifact_name=$OUTPUT_BIN" >> $GITHUB_ENV
-          echo "artifact_path=$BUILD_DIR/$OUTPUT_BIN" >> $GITHUB_ENV
+          echo "artifact_path=$OUTPUT_BIN" >> $GITHUB_ENV
       - name: Upload ${{ matrix.board.name }} Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.artifact_name }}
           path: ${{ env.artifact_path }}
+          retention-days: 5
+      - name: Upload ${{ matrix.board.name }} Parts (backup)
+        uses: actions/upload-artifact@v4
+        with:
+          name: xiaomiao_parts
+          path: xiaomiao_parts.zip
           retention-days: 5
 
   post_compile_steps:
