@@ -667,11 +667,19 @@
       #define D_PULL true
     #endif
     #ifdef MARAUDER_XUEERSI_XIAOMIAO
-      #define L_BTN 27
-      #define C_BTN 34
-      #define U_BTN 2
-      #define R_BTN 35
-      #define D_BTN 13
+      // Screen is rotated 90 deg (portrait), so remap D-pad to match on-screen directions.
+      // Physical keys: up=GPIO2, down=GPIO13, left=GPIO27, right=GPIO35, A=GPIO34, B=GPIO12
+      // Requested logical mapping:
+      //   phys left(27)  -> logical DOWN
+      //   phys right(35) -> logical UP
+      //   phys up(2)     -> logical LEFT
+      //   phys down(13)  -> logical RIGHT (implied, keeps rotation consistent)
+      //   B(12)          -> CONFIRM (center)
+      #define L_BTN 2    // phys up  -> left
+      #define C_BTN 12   // B key    -> confirm
+      #define U_BTN 35   // phys right -> up
+      #define R_BTN 13   // phys down  -> right
+      #define D_BTN 27   // phys left  -> down
 
       #define HAS_L
       #define HAS_R
