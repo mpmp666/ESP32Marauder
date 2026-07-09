@@ -2031,21 +2031,21 @@
 
       #define BANNER_TEXT_SIZE 1
 
-      #define TFT_WIDTH 160
+      #define TFT_WIDTH 128
       #define TFT_HEIGHT 128
 
       #define GRAPH_VERT_LIM TFT_HEIGHT/2 - 1
 
       #define EXT_BUTTON_WIDTH 0
 
-      #define SCREEN_ORIENTATION 2  // landscape-native panel (160-col GRAM): no MV swap so _width stays 160 and Marauder's full 160-wide UI fits with no clip. rotation 2 = no flip/no MV = upright landscape.
+      #define SCREEN_ORIENTATION 0  // Mini-class 128x128 square panel: rotation 0 fills fully (no MV swap, no clip). If upside-down, switch to 2.
 
       #define CHAR_WIDTH 6
-      #define SCREEN_WIDTH TFT_WIDTH // 160, matches _width (no rotation swap)
+      #define SCREEN_WIDTH TFT_WIDTH // 128
       #define SCREEN_HEIGHT TFT_HEIGHT // 128
       #define HEIGHT_1 TFT_WIDTH
       #define WIDTH_1 TFT_WIDTH
-      #define STANDARD_FONT_CHAR_LIMIT (TFT_WIDTH/6) // characters per line on 160px-wide screen
+      #define STANDARD_FONT_CHAR_LIMIT (TFT_WIDTH/6) // characters per line on 128px-wide screen
       #define TEXT_HEIGHT (TFT_HEIGHT/10) // Height of text to be printed and scrolled
       #define BOT_FIXED_AREA 0
       #define TOP_FIXED_AREA 48
@@ -2472,7 +2472,7 @@
     // Keypad start position, key sizes and spacing
     #define KEY_X (TFT_WIDTH/2) // Centre of key
     #define KEY_Y 50
-    #define KEY_W 240 // Width and height
+    #define KEY_W TFT_WIDTH // Width and height (128, fits the square panel)
     #define KEY_H 22
     #define KEY_SPACING_X 0 // X and Y gap
     #define KEY_SPACING_Y 1

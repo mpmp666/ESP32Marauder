@@ -52,10 +52,10 @@
 
 // For ST7789, ST7735 and ILI9163 ONLY, define the pixel width and height in portrait orientation
 // #define TFT_WIDTH  80
- #define TFT_WIDTH  160 // Xueersi Xiaomiao: panel is landscape-native (160-col GRAM). Keep 160 so Marauder's 160-wide UI fits with no clip.
+ #define TFT_WIDTH  128 // Xueersi Xiaomiao: GRAM is 128 cols wide (Mini-class 128x128 panel). 160-wide UI overflowed -> right-side clip. Square 128x128 fills fully.
 // #define TFT_WIDTH  240 // ST7789 240 x 240 and 240 x 320
 // #define TFT_HEIGHT 160
- #define TFT_HEIGHT 128 // Xueersi Xiaomiao: landscape-native 160x128
+ #define TFT_HEIGHT 128 // Xueersi Xiaomiao: 128x128 square panel
 // #define TFT_HEIGHT 240 // ST7789 240 x 240
 // #define TFT_HEIGHT 320 // ST7789 240 x 320
 
