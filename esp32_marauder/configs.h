@@ -68,6 +68,8 @@
     #define HARDWARE_NAME "M5 Cardputer ADV"
   #elif defined(MARAUDER_MINI)
     #define HARDWARE_NAME "Marauder Mini"
+  #elif defined(MARAUDER_XUEERSI_XIAOMIAO)
+    #define HARDWARE_NAME "Xueersi Xiaomiao"
   #elif defined(MARAUDER_V7)
     #define HARDWARE_NAME "Marauder v7"
   #elif defined(MARAUDER_V7_1)
@@ -185,6 +187,27 @@
     //#define HAS_C5_SD
     #define HAS_SIMPLEX_DISPLAY
   #endif
+
+  #ifdef MARAUDER_XUEERSI_XIAOMIAO
+    //#define FLIPPER_ZERO_HAT
+    //#define HAS_BATTERY
+    //#define HAS_MINI_KB
+    #define HAS_BT
+    #define HAS_BUTTONS
+    //#define HAS_NEOPIXEL_LED
+    //#define HAS_PWR_MGMT
+    #define HAS_SCREEN
+    #define HAS_MINI_SCREEN
+    #define HAS_SD
+    #define USE_SD
+    //#define HAS_TEMP_SENSOR
+    //#define HAS_GPS
+    #define HAS_NIMBLE_2
+    #define HAS_IDF_3
+    //#define HAS_C5_SD
+    #define HAS_SIMPLEX_DISPLAY
+  #endif
+
 
   #ifdef MARAUDER_V7
     //#define FLIPPER_ZERO_HAT
@@ -643,6 +666,27 @@
       #define R_PULL true
       #define D_PULL true
     #endif
+    #ifdef MARAUDER_XUEERSI_XIAOMIAO
+      #define L_BTN 27
+      #define C_BTN 34
+      #define U_BTN 2
+      #define R_BTN 35
+      #define D_BTN 13
+
+      #define HAS_L
+      #define HAS_R
+      #define HAS_U
+      #define HAS_D
+      #define HAS_C
+
+      #define L_PULL true
+      #define C_PULL true
+      #define U_PULL true
+      #define R_PULL true
+      #define D_PULL true
+    #endif
+
+
 
     #ifdef MARAUDER_V7
       #define L_BTN 13
@@ -1966,6 +2010,83 @@
     
       #define STATUSBAR_COLOR 0x4A49
     #endif
+
+    #ifdef MARAUDER_XUEERSI_XIAOMIAO
+      #define CHAN_PER_PAGE 7
+
+      #define SCREEN_CHAR_WIDTH 40
+      #define TFT_MISO 19
+      #define TFT_MOSI 23
+      #define TFT_SCLK 18
+      #define TFT_CS 5
+      #define TFT_DC 4
+      #define TFT_RST 19
+      //#define TFT_BL            // 小喵无独立背光引脚 (no dedicated backlight pin)
+      #define TOUCH_CS -1
+      #define SD_CS 22
+
+      #define SCREEN_BUFFER
+
+      #define MAX_SCREEN_BUFFER 9
+
+      #define BANNER_TEXT_SIZE 1
+
+      #ifndef TFT_WIDTH
+        #define TFT_WIDTH 128
+      #endif
+
+      #ifndef TFT_HEIGHT
+        #define TFT_HEIGHT 160
+      #endif
+
+      #define GRAPH_VERT_LIM TFT_HEIGHT/2 - 1
+
+      #define EXT_BUTTON_WIDTH 0
+
+      #define SCREEN_ORIENTATION 1
+
+      #define CHAR_WIDTH 6
+      #define SCREEN_WIDTH TFT_HEIGHT // 160 in landscape
+      #define SCREEN_HEIGHT TFT_WIDTH // 128 in landscape
+      #define HEIGHT_1 TFT_HEIGHT
+      #define WIDTH_1 TFT_HEIGHT
+      #define STANDARD_FONT_CHAR_LIMIT (TFT_HEIGHT/6) // characters per line on the 160px-wide landscape screen
+      #define TEXT_HEIGHT (TFT_WIDTH/10) // Height of text to be printed and scrolled
+      #define BOT_FIXED_AREA 0
+      #define TOP_FIXED_AREA 48
+      #define YMAX TFT_HEIGHT
+      #define minimum(a,b)     (((a) < (b)) ? (a) : (b))
+      //#define MENU_FONT NULL
+      #define MENU_FONT &FreeMono9pt7b
+      //#define MENU_FONT &FreeMonoBold9pt7b
+      //#define MENU_FONT &FreeSans9pt7b
+      //#define MENU_FONT &FreeSansBold9pt7b
+      #define BUTTON_SCREEN_LIMIT 9
+      #define BUTTON_ARRAY_LEN BUTTON_SCREEN_LIMIT
+      #define STATUS_BAR_WIDTH (TFT_WIDTH/16)
+
+      #define LVGL_TICK_PERIOD 6
+
+      #define FRAME_X 100
+      #define FRAME_Y 64
+      #define FRAME_W 120
+      #define FRAME_H 50
+
+      // Red zone size
+      #define REDBUTTON_X FRAME_X
+      #define REDBUTTON_Y FRAME_Y
+      #define REDBUTTON_W (FRAME_W/2)
+      #define REDBUTTON_H FRAME_H
+
+      // Green zone size
+      #define GREENBUTTON_X (REDBUTTON_X + REDBUTTON_W)
+      #define GREENBUTTON_Y FRAME_Y
+      #define GREENBUTTON_W (FRAME_W/2)
+      #define GREENBUTTON_H FRAME_H
+
+      #define STATUSBAR_COLOR 0x4A49
+    #endif
+
 
     #ifdef MARAUDER_REV_FEATHER
       #define CHAN_PER_PAGE 7
