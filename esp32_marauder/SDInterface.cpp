@@ -52,11 +52,35 @@ bool SDInterface::initSD() {
       if (!SD.begin(SD_CS)) {
     #endif
       Serial.println(F("Failed to mount SD Card"));
+      #ifdef MARAUDER_XUEERSI_XIAOMIAO
+        Serial.printf("XM_SD: SD.begin failed. SD_CS=%d cardType=%d\n", SD_CS, (int)SD.cardType());
+      #endif
       this->supported = false;
       return false;
     }
     else {
       this->supported = true;
+      #ifdef MARAUDER_XUEERSI_XIAOMIAO
+        Serial.printf("XM_SD: mount OK cardType=%d\n", (int)SD.cardType());
+        {
+          File wf = SD.open("/xm_selftest.txt", FILE_WRITE);
+          if (wf) {
+            wf.println("xm_test_123");
+            wf.close();
+            File rf = SD.open("/xm_selftest.txt");
+            if (rf) {
+              String s = rf.readString();
+              rf.close();
+              Serial.printf("XM_SD: write+read OK, content='%s'\n", s.c_str());
+            } else {
+              Serial.println("XM_SD: read-back FAILED");
+            }
+            SD.remove("/xm_selftest.txt");
+          } else {
+            Serial.println("XM_SD: write FAILED");
+          }
+        }
+      #endif
       this->cardType = SD.cardType();
 
       this->cardSizeMB = SD.cardSize() / (1024 * 1024);
