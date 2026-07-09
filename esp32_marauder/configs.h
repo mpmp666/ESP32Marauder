@@ -2031,20 +2031,20 @@
 
       #define BANNER_TEXT_SIZE 1
 
-      #define TFT_WIDTH 160
-      #define TFT_HEIGHT 128
+      #define TFT_WIDTH 128
+      #define TFT_HEIGHT 160
 
       #define GRAPH_VERT_LIM TFT_HEIGHT/2 - 1
 
       #define EXT_BUTTON_WIDTH 0
 
-      #define SCREEN_ORIENTATION 0  // native landscape 160x128, no MV swap -> fills full panel (was 3 with 128x160 which clipped right ~1/3)
+      #define SCREEN_ORIENTATION 3  // landscape (MV swap), direction validated correct; REDTAB 128x160 fills full 160x128 with zero offset
 
       #define CHAR_WIDTH 6
-      #define SCREEN_WIDTH TFT_WIDTH // 160 native landscape
-      #define SCREEN_HEIGHT TFT_HEIGHT // 128 native landscape
-      #define HEIGHT_1 TFT_WIDTH
-      #define WIDTH_1 TFT_WIDTH
+      #define SCREEN_WIDTH TFT_HEIGHT // 160 in landscape
+      #define SCREEN_HEIGHT TFT_WIDTH // 128 in landscape
+      #define HEIGHT_1 TFT_HEIGHT
+      #define WIDTH_1 TFT_HEIGHT
       #define STANDARD_FONT_CHAR_LIMIT (TFT_HEIGHT/6) // characters per line on the 160px-wide landscape screen
       #define TEXT_HEIGHT (TFT_WIDTH/10) // Height of text to be printed and scrolled
       #define BOT_FIXED_AREA 0
