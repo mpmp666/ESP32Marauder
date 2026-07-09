@@ -2043,7 +2043,7 @@
 
       #define EXT_BUTTON_WIDTH 0
 
-      #define SCREEN_ORIENTATION 1
+      #define SCREEN_ORIENTATION 3  // flip 180deg to fix reversed display (landscape 160x128)
 
       #define CHAR_WIDTH 6
       #define SCREEN_WIDTH TFT_HEIGHT // 160 in landscape

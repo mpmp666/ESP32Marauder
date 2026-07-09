@@ -70,7 +70,7 @@
 // #define ST7735_GREENTAB
 // #define ST7735_GREENTAB2
 //#define ST7735_GREENTAB3
- #define ST7735_GREENTAB  // Xueersi Xiaomiao 128x160 panel
+ #define ST7735_REDTAB    // Xueersi Xiaomiao: 128x160 panel. GREENTAB was 128x128 -> caused fringe + missing area. REDTAB = 128x160, offset 0,0, RGB.
 // #define ST7735_GREENTAB128    // For 128 x 128 display
 // #define ST7735_GREENTAB160x80 // For 160 x 80 display (BGR, inverted, 26 offset)
 // #define ST7735_REDTAB
