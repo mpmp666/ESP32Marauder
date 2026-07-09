@@ -223,7 +223,7 @@ jobs:
       
       - name: Rename and Upload ${{ matrix.board.name }} Artifact
         run: |
-          VERSION=$(grep '#define MARAUDER_VERSION' ./esp32_marauder/configs.h | sed -E 's/.*"v([^"]+)"/v\1/' | tr '.' '_')
+          VERSION=$(grep '#define MARAUDER_VERSION' ./esp32_marauder/configs.h | sed -E 's/.*"v([^"]+)"/v\1/' | tr '.' '_' | tr -d '\r')
           DATE=$(date +%Y%m%d)
 
           BUILD_DIR=./esp32_marauder/build/esp32.esp32.${{ matrix.board.build_dir }}
