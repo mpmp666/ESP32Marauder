@@ -2021,7 +2021,7 @@
       #define TFT_CS 5
       #define TFT_DC 4
       #define TFT_RST 19
-      //#define TFT_BL            // 小喵无独立背光引脚 (no dedicated backlight pin)
+      #define TFT_BL -1            // 小喵无独立背光引脚 (no dedicated backlight pin; -1 = no backlight)
       #define TOUCH_CS -1
       #define SD_CS 22
 
@@ -2468,7 +2468,26 @@
     #define BUTTON_PADDING 22
     //#define BUTTON_ARRAY_LEN 5
   #endif
-  
+
+  #ifdef MARAUDER_XUEERSI_XIAOMIAO
+    #define BANNER_TIME 50
+
+    #define COMMAND_PREFIX "!"
+
+    // Keypad start position, key sizes and spacing
+    #define KEY_X (TFT_WIDTH/2) // Centre of key
+    #define KEY_Y 50
+    #define KEY_W 240 // Width and height
+    #define KEY_H 22
+    #define KEY_SPACING_X 0 // X and Y gap
+    #define KEY_SPACING_Y 1
+    #define KEY_TEXTSIZE 1   // Font size multiplier
+    #define ICON_W 22
+    #define ICON_H 22
+    #define BUTTON_PADDING 22
+    //#define BUTTON_ARRAY_LEN 5
+  #endif
+
   #ifdef MARAUDER_MINI
     #define BANNER_TIME 50
     
