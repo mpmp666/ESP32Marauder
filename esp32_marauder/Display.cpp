@@ -211,7 +211,18 @@ void Display::RunSetup() {
   #ifdef HAS_CAP_TOUCH
     ft6336_init();
   #endif
-  
+
+  #ifdef MARAUDER_XUEERSI_XIAOMIAO
+    // GPIO19 is shared by the TFT reset line AND the SD card MISO.
+    // TFT_eSPI ignores this pin (TFT_RST is -1) so we issue one reset pulse
+    // here, then release it to INPUT_PULLUP so the SD card can use it as MISO.
+    pinMode(19, OUTPUT);
+    digitalWrite(19, LOW);
+    delay(20);
+    digitalWrite(19, HIGH);
+    pinMode(19, INPUT_PULLUP);
+  #endif
+
   tft.init();
 
   tft.setRotation(SCREEN_ORIENTATION);

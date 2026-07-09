@@ -2028,7 +2028,7 @@
       #define TFT_SCLK 18
       #define TFT_CS 5
       #define TFT_DC 4
-      #define TFT_RST 19
+      #define TFT_RST -1           // GPIO19 is SHARED with the SD card MISO; released to INPUT_PULLUP after a reset pulse (see Display.cpp). Must stay -1 so TFT_eSPI does not drive it as a permanent OUTPUT (which would clamp the SD MISO).
       #define TFT_BL -1            // 小喵无独立背光引脚 (no dedicated backlight pin; -1 = no backlight)
       #define TOUCH_CS -1
       #define SD_CS 22
