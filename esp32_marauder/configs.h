@@ -2064,7 +2064,7 @@
       //#define MENU_FONT &FreeMonoBold9pt7b
       //#define MENU_FONT &FreeSans9pt7b
       //#define MENU_FONT &FreeSansBold9pt7b
-      #define BUTTON_SCREEN_LIMIT 9
+      #define BUTTON_SCREEN_LIMIT 7   // rows that fit the 128px-tall panel (see KEY_Y/KEY_H below); paginate after this
       #define BUTTON_ARRAY_LEN BUTTON_SCREEN_LIMIT
       #define STATUS_BAR_WIDTH (TFT_WIDTH/16)
 
@@ -2478,16 +2478,18 @@
     #define COMMAND_PREFIX "!"
 
     // Keypad start position, key sizes and spacing
+    // Tuned for the 128x128 mini screen: start the list just below the ~16px status bar
+    // and use a compact 15px row pitch so 7 rows (BUTTON_SCREEN_LIMIT) fit without clipping.
     #define KEY_X (TFT_WIDTH/2) // Centre of key
-    #define KEY_Y 50
+    #define KEY_Y 28   // centre of first row (rect top ~17, clears the status bar)
     #define KEY_W TFT_WIDTH // Width and height (128, fits the square panel)
-    #define KEY_H 22
+    #define KEY_H 14   // row height; 7 rows * 15px pitch ends at y=121 (< 128)
     #define KEY_SPACING_X 0 // X and Y gap
     #define KEY_SPACING_Y 1
     #define KEY_TEXTSIZE 1   // Font size multiplier
-    #define ICON_W 22
-    #define ICON_H 22
-    #define BUTTON_PADDING 22
+    #define ICON_W 14
+    #define ICON_H 14
+    #define BUTTON_PADDING 3   // mini screen draws no icon, keep text near the left edge
     //#define BUTTON_ARRAY_LEN 5
   #endif
 
