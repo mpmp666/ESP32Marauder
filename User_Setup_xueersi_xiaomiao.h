@@ -168,7 +168,7 @@
 // Marauder Mini
 #define TFT_CS   5  // Chip select control pin (Xueersi Xiaomiao)
 #define TFT_DC   4  // Data Command control pin (Xueersi Xiaomiao)
-#define TFT_RST  19  // Reset pin (Xueersi Xiaomiao)
+#define TFT_RST  -1  // Reset pin: GPIO19 is SHARED with the SD card MISO. TFT_eSPI must NOT own it (Display.cpp issues the reset pulse, then frees the pin for SD)
 #define TOUCH_CS -1
 #define TFT_MISO 19
 #define TFT_MOSI 23

@@ -292,8 +292,8 @@ void setup()
   #endif
 
   #ifdef HAS_SIMPLEX_DISPLAY
-    #if defined(HAS_SD) && !defined(MARAUDER_XUEERSI_XIAOMIAO)
-      // Do some SD stuff (xiaomiao inits SD AFTER the display, see block below)
+    #if defined(HAS_SD)
+      // Do some SD stuff
       if(!sd_obj.initSD())
         Serial.println(F("SD Card NOT Supported"));
 
@@ -303,19 +303,6 @@ void setup()
   #ifdef HAS_SCREEN
     display_obj.RunSetup();
     display_obj.tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  #endif
-
-  #ifdef MARAUDER_XUEERSI_XIAOMIAO
-    #if defined(HAS_SD)
-      // Xiaomiao's ST7735 (VSPI) shares the SPI bus with the SD card. The TFT must
-      // claim the bus first (tft.init -> spi_bus_initialize), then SD.begin() attaches
-      // its device to the already-initialized VSPI bus. Initializing SD before the
-      // display makes tft.init() re-init VSPI and orphan SD's device handle, so every
-      // SD file open after boot fails ("Failed to open file"). SD init therefore runs
-      // here, AFTER Display::RunSetup().
-      if(!sd_obj.initSD())
-        Serial.println(F("SD Card NOT Supported"));
-    #endif
   #endif
 
   // Init PWM brightness AFTER display init (so ledcAttach overrides TFT_eSPI's pinMode)
