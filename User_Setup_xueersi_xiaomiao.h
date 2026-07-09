@@ -52,10 +52,10 @@
 
 // For ST7789, ST7735 and ILI9163 ONLY, define the pixel width and height in portrait orientation
 // #define TFT_WIDTH  80
- #define TFT_WIDTH  160 // Xueersi Xiaomiao (declare 160x128, force landscape via rotation)
+ #define TFT_WIDTH  128 // Xueersi Xiaomiao (128x160 native portrait, landscape via rotation 3)
 // #define TFT_WIDTH  240 // ST7789 240 x 240 and 240 x 320
 // #define TFT_HEIGHT 160
- #define TFT_HEIGHT 128 // Xueersi Xiaomiao (declare 160x128, force landscape via rotation)
+ #define TFT_HEIGHT 160 // Xueersi Xiaomiao (128x160 native portrait, landscape via rotation 3)
 // #define TFT_HEIGHT 240 // ST7789 240 x 240
 // #define TFT_HEIGHT 320 // ST7789 240 x 320
 
@@ -69,8 +69,8 @@
 // #define ST7735_INITB
 // #define ST7735_GREENTAB
 // #define ST7735_GREENTAB2
-//#define ST7735_GREENTAB3
- #define ST7735_REDTAB    // Xueersi Xiaomiao: 160x128 panel (native landscape). RGB colour order, offset 0,0.
+ #define ST7735_GREENTAB3   // +1,+2 GRAM offset in rotation 3 (fixes right-edge clipping/fringe); MADCTL identical to REDTAB so direction & colour unchanged
+// #define ST7735_REDTAB    // replaced by GREENTAB3 for GRAM offset fix
 // #define ST7735_GREENTAB128    // For 128 x 128 display
 // #define ST7735_GREENTAB160x80 // For 160 x 80 display (BGR, inverted, 26 offset)
 // #define ST7735_REDTAB

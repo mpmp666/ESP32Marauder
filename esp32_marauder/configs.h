@@ -2031,18 +2031,18 @@
 
       #define BANNER_TEXT_SIZE 1
 
-      #define TFT_WIDTH 160
-      #define TFT_HEIGHT 128
+      #define TFT_WIDTH 128
+      #define TFT_HEIGHT 160
 
       #define GRAPH_VERT_LIM TFT_HEIGHT/2 - 1
 
       #define EXT_BUTTON_WIDTH 0
 
-      #define SCREEN_ORIENTATION 3  // force landscape via MV swap on 160x128 declaration; CASET 0..127 matches the 128-col GRAM so the panel fills with no right-side clip
+      #define SCREEN_ORIENTATION 3  // landscape (MV swap) on 128x160 native panel; GREENTAB3 adds +1,+2 GRAM offset to fill fully
 
       #define CHAR_WIDTH 6
-      #define SCREEN_WIDTH TFT_HEIGHT // 128, matches tft.width() after rotation 3 (no overflow)
-      #define SCREEN_HEIGHT TFT_WIDTH // 160
+      #define SCREEN_WIDTH TFT_HEIGHT // 160, matches tft.width() after rotation 3
+      #define SCREEN_HEIGHT TFT_WIDTH // 128
       #define HEIGHT_1 TFT_HEIGHT
       #define WIDTH_1 TFT_HEIGHT
       #define STANDARD_FONT_CHAR_LIMIT (TFT_HEIGHT/6) // characters per line
